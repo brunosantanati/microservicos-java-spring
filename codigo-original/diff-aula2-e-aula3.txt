@@ -1,0 +1,10 @@
+diff -r codigo-original/aula-2/pagamentos/src/main/resources/application.properties codigo-original/aula-3/pagamentos/src/main/resources/application.properties
+1c1,5
+< 
+---
+> spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+> spring.datasource.url=jdbc:mysql://localhost:3306/alurafood-pagamento?createDatabaseIfNotExist=true
+> spring.datasource.username=root
+> spring.datasource.password=root
+> spring.jpa.show-sql=true
+Only in codigo-original/aula-3/pagamentos/src/main/resources: db

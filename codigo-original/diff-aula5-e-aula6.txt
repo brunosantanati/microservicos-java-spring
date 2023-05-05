@@ -1,0 +1,84 @@
+diff -r codigo-original/aula-5/pagamentos/pom.xml codigo-original/aula-6/pagamentos/pom.xml
+67a68,82
+> 		<dependency>
+> 			<groupId>org.springframework.cloud</groupId>
+> 			<artifactId>spring-cloud-starter-openfeign</artifactId>
+> 			<version>3.1.2</version>
+> 		</dependency>
+> 
+> 		<dependency>
+> 			<groupId>io.github.resilience4j</groupId>
+> 			<artifactId>resilience4j-spring-boot2</artifactId>
+> 			<version>1.7.0</version>
+> 		</dependency>
+> 		<dependency>
+> 			<groupId>org.springframework.boot</groupId>
+> 			<artifactId>spring-boot-starter-aop</artifactId>
+> 		</dependency>
+diff -r codigo-original/aula-5/pagamentos/src/main/java/br/com/alurafood/pagamentos/controller/PagamentoController.java codigo-original/aula-6/pagamentos/src/main/java/br/com/alurafood/pagamentos/controller/PagamentoController.java
+4a5
+> import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+55a57,67
+> 
+>     @PatchMapping("/{id}/confirmar")
+>     @CircuitBreaker(name = "atualizaPedido", fallbackMethod = "pagamentoAutorizadoComIntegracaoPendente")
+>     public void confirmarPagamento(@PathVariable @NotNull Long id){
+>         service.confirmarPagamento(id);
+>     }
+> 
+>     public void pagamentoAutorizadoComIntegracaoPendente(Long id, Exception e){
+>         service.alteraStatus(id);
+>     }
+> 
+Only in codigo-original/aula-6/pagamentos/src/main/java/br/com/alurafood/pagamentos: http
+diff -r codigo-original/aula-5/pagamentos/src/main/java/br/com/alurafood/pagamentos/model/Status.java codigo-original/aula-6/pagamentos/src/main/java/br/com/alurafood/pagamentos/model/Status.java
+5a6
+>     CONFIRMADO_SEM_INTEGRACAO,
+diff -r codigo-original/aula-5/pagamentos/src/main/java/br/com/alurafood/pagamentos/PagamentosApplication.java codigo-original/aula-6/pagamentos/src/main/java/br/com/alurafood/pagamentos/PagamentosApplication.java
+5a6
+> import org.springframework.cloud.openfeign.EnableFeignClients;
+9c10
+< 
+---
+> @EnableFeignClients
+diff -r codigo-original/aula-5/pagamentos/src/main/java/br/com/alurafood/pagamentos/service/PagamentoService.java codigo-original/aula-6/pagamentos/src/main/java/br/com/alurafood/pagamentos/service/PagamentoService.java
+3a4
+> import br.com.alurafood.pagamentos.http.PedidoClient;
+13a15
+> import java.util.Optional;
+23a26,28
+>     @Autowired
+>     private PedidoClient pedido;
+> 
+56a62,76
+>     public void confirmarPagamento(Long id){
+>         Optional<Pagamento> pagamento = repository.findById(id);
+> 
+>         if (!pagamento.isPresent()) {
+>             throw new EntityNotFoundException();
+>         }
+> 
+>         pagamento.get().setStatus(Status.CONFIRMADO);
+>         repository.save(pagamento.get());
+>         pedido.atualizaPagamento(pagamento.get().getPedidoId());
+>     }
+> 
+> 
+>     public void alteraStatus(Long id) {
+>         Optional<Pagamento> pagamento = repository.findById(id);
+57a78,80
+>         if (!pagamento.isPresent()) {
+>             throw new EntityNotFoundException();
+>         }
+58a82,85
+>         pagamento.get().setStatus(Status.CONFIRMADO_SEM_INTEGRACAO);
+>         repository.save(pagamento.get());
+> 
+>     }
+diff -r codigo-original/aula-5/pagamentos/src/main/resources/application.properties codigo-original/aula-6/pagamentos/src/main/resources/application.properties
+9a10,13
+> 
+> resilience4j.circuitbreaker.instances.atualizaPedido.slidingWindowSize: 3
+> resilience4j.circuitbreaker.instances.atualizaPedido.minimumNumberOfCalls: 2
+> resilience4j.circuitbreaker.instances.atualizaPedido.waitDurationInOpenState: 50s
+\ No newline at end of file

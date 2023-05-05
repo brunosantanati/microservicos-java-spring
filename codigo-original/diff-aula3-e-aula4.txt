@@ -1,0 +1,40 @@
+diff -r codigo-original/aula-3/pagamentos/pom.xml codigo-original/aula-4/pagamentos/pom.xml
+63c63,68
+<     </dependencies>
+---
+> 		<dependency>
+> 			<groupId>org.springframework.cloud</groupId>
+> 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+> 			<version>3.1.2</version>
+> 		</dependency>
+> 	</dependencies>
+Only in codigo-original/aula-4/pagamentos/src/main/java/br/com/alurafood/pagamentos: config
+diff -r codigo-original/aula-3/pagamentos/src/main/java/br/com/alurafood/pagamentos/controller/PagamentoController.java codigo-original/aula-4/pagamentos/src/main/java/br/com/alurafood/pagamentos/controller/PagamentoController.java
+45c45
+<     @PutMapping
+---
+>     @PutMapping("/{id}")
+diff -r codigo-original/aula-3/pagamentos/src/main/java/br/com/alurafood/pagamentos/PagamentosApplication.java codigo-original/aula-4/pagamentos/src/main/java/br/com/alurafood/pagamentos/PagamentosApplication.java
+4a5
+> import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+6a8,9
+> @EnableEurekaClient
+> 
+diff -r codigo-original/aula-3/pagamentos/src/main/resources/application.properties codigo-original/aula-4/pagamentos/src/main/resources/application.properties
+5a6,9
+> 
+> spring.application.name=pagamentos-ms
+> eureka.client.serviceUrl.defaultZone=http://localhost:8081/eureka
+> server.port=0
+diff -r codigo-original/aula-3/pagamentos/src/main/resources/db/migration/V1__criar_tabela_pagamentos.sql codigo-original/aula-4/pagamentos/src/main/resources/db/migration/V1__criar_tabela_pagamentos.sql
+7c7
+<  expiracao varchar(7) DEFAULT NULL,
+---
+>  expiracao varchar(7) NOT NULL,
+13c13
+< );
+---
+> );
+\ No newline at end of file
+Only in codigo-original/aula-4: pedidos
+Only in codigo-original/aula-4: server

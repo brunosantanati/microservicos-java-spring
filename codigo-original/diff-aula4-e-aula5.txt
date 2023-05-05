@@ -1,0 +1,22 @@
+Only in codigo-original/aula-5: gateway
+Only in codigo-original/aula-5/pedidos: .mvn
+diff -r codigo-original/aula-4/pedidos/pom.xml codigo-original/aula-5/pedidos/pom.xml
+67a68
+> 
+diff -r codigo-original/aula-4/pedidos/src/main/java/br/com/alurafood/pedidos/controller/PedidoController.java codigo-original/aula-5/pedidos/src/main/java/br/com/alurafood/pedidos/controller/PedidoController.java
+6a7
+> import org.springframework.beans.factory.annotation.Value;
+32a34,38
+>         }
+> 
+>         @GetMapping("/porta")
+>         public String retornaPorta(@Value("${local.server.port}") String porta){
+>             return String.format("Requisição respondida pela instância executando na porta %s", porta);
+diff -r codigo-original/aula-4/pedidos/src/main/java/br/com/alurafood/pedidos/PedidosApplication.java codigo-original/aula-5/pedidos/src/main/java/br/com/alurafood/pedidos/PedidosApplication.java
+8a9
+> 
+diff -r codigo-original/aula-4/pedidos/src/main/resources/application.properties codigo-original/aula-5/pedidos/src/main/resources/application.properties
+7a8
+> eureka.instance.instance-id=${spring.application.name}:${random.int}
+Only in codigo-original/aula-5/pedidos/src: test
+Only in codigo-original/aula-4/pedidos: target

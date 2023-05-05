@@ -1,0 +1,19 @@
+Only in codigo-original/aula-1/pagamentos: HELP.md
+diff -r codigo-original/aula-1/pagamentos/pom.xml codigo-original/aula-2/pagamentos/pom.xml
+58c58,63
+< 	</dependencies>
+---
+>         <dependency>
+>             <groupId>org.modelmapper</groupId>
+>             <artifactId>modelmapper</artifactId>
+>             <version>3.1.0</version>
+>         </dependency>
+>     </dependencies>
+Only in codigo-original/aula-2/pagamentos/src/main/java/br/com/alurafood/pagamentos: controller
+Only in codigo-original/aula-2/pagamentos/src/main/java/br/com/alurafood/pagamentos: dto
+Only in codigo-original/aula-2/pagamentos/src/main/java/br/com/alurafood/pagamentos: model
+Only in codigo-original/aula-2/pagamentos/src/main/java/br/com/alurafood/pagamentos: repository
+Only in codigo-original/aula-2/pagamentos/src/main/java/br/com/alurafood/pagamentos: service
+Only in codigo-original/aula-1/pagamentos/src/main/resources: db
+Only in codigo-original/aula-1/pagamentos/src/main/resources: static
+Only in codigo-original/aula-1/pagamentos/src/main/resources: templates
